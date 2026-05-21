@@ -1,0 +1,58 @@
+name: Article Correction
+description: Report a factual error, broken link, outdated information, or typo in an article.
+title: "[Correction]: "
+labels: ["correction", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Found something wrong in an article? Let us know so we can fix it!
+
+  - type: input
+    id: article
+    attributes:
+      label: Article Title or URL
+      description: Which article contains the issue?
+      placeholder: e.g., "Welcome to AI Dev Me" or https://aidev.me/articles/...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: Type of Issue
+      description: What kind of correction is needed?
+      options:
+        - Factual error
+        - Outdated information
+        - Broken link
+        - Typo / grammar
+        - Incorrect code sample
+        - Missing information
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_content
+    attributes:
+      label: Current (Incorrect) Content
+      description: Quote or describe the content that needs to be corrected.
+      placeholder: "Currently the article says: ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested_correction
+    attributes:
+      label: Suggested Correction
+      description: What should it say instead?
+      placeholder: "It should say: ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any references or sources supporting the correction?

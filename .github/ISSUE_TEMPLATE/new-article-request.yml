@@ -1,0 +1,57 @@
+name: New Article Request
+description: Suggest a topic or idea for a new article on the blog.
+title: "[Article Request]: "
+labels: ["article request", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new article! Fill in the details below to help us understand what you'd like to see covered.
+
+  - type: input
+    id: topic
+    attributes:
+      label: Article Topic
+      description: What topic should the article cover?
+      placeholder: e.g., "Building a Power Pages site with GitHub Copilot"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the article idea in more detail. What problem does it solve? What should readers learn?
+      placeholder: A brief overview of what the article should cover...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Which area does this article fall under?
+      options:
+        - Power Apps
+        - Power Pages
+        - Power Automate
+        - Power BI
+        - Dataverse
+        - Azure
+        - AI Tools / GitHub Copilot
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: audience
+    attributes:
+      label: Target Audience
+      description: Who would benefit most from this article? (e.g., beginners, experienced developers, architects)
+      placeholder: e.g., Power Platform developers with basic knowledge of Canvas Apps
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any links, references, or examples that could help shape the article?

@@ -1,0 +1,58 @@
+name: Content Improvement
+description: Suggest improvements to an existing article, such as adding examples, clarifying explanations, or expanding a section.
+title: "[Improvement]: "
+labels: ["improvement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have ideas to make an existing article better? We'd love to hear them!
+
+  - type: input
+    id: article
+    attributes:
+      label: Article Title or URL
+      description: Which article would you like to see improved?
+      placeholder: e.g., "Welcome to AI Dev Me" or https://aidev.me/articles/...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: improvement_type
+    attributes:
+      label: Type of Improvement
+      description: What kind of improvement are you suggesting?
+      options:
+        - Add more detail / explanation
+        - Add code sample or example
+        - Add screenshots or visuals
+        - Improve structure / readability
+        - Expand a section
+        - Add related resources or links
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_state
+    attributes:
+      label: Current State
+      description: Which part of the article needs improvement and why?
+      placeholder: "The section about X doesn't explain Y clearly..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested_improvement
+    attributes:
+      label: Suggested Improvement
+      description: What would make it better? Be as specific as possible.
+      placeholder: "It would help to include a step-by-step example of..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any references, examples, or other context that would help?
