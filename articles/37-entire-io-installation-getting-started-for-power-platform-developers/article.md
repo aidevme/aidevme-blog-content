@@ -163,30 +163,139 @@ The capability differences matter when choosing which agent to use for complex, 
 A mature Power Platform code-first repository with Entire enabled looks like this:
 
 ```
-my-solution-repo/
+entire-io-power-platform-samples/
+├── README.md                          ← Series overview, prerequisites, how to use
+├── CONTRIBUTING.md                    ← How to run samples, submit issues, style guide
+├── .gitignore
 ├── .entire/
-│   ├── settings.json           # Shared Entire config
-│   ├── .gitignore
-│   └── redactors/              # Optional: custom redaction rule packs
-│       └── pp-internal.yaml
-├── src/
-│   ├── MyCompany.MyApp/        # Unpacked solution (pac solution unpack)
-│   │   ├── Plugins/
-│   │   ├── WebResources/
-│   │   └── Other/
-│   ├── MyApp.Plugins/          # C# Dataverse plugin project
-│   │   ├── MyApp.Plugins.csproj
-│   │   └── *.cs
-│   ├── MyApp.PCFControls/      # PCF TypeScript projects
-│   │   └── MyControl/
-│   │       ├── index.ts
-│   │       └── ControlManifest.Input.xml
-│   └── MyApp.Tests/            # NUnit / Moq unit tests
-├── pipelines/                   # Azure DevOps YAML pipeline definitions
-├── MyApp.cdsproj               # Solution build driver (dotnet build)
+│   ├── settings.json                  ← Entire enabled; sample redaction rules — commit this
+│   ├── settings.local.json            ← Personal overrides — gitignored automatically
+│   └── .gitignore                     ← Ensures local settings are not committed
+├── .git/
+│   └── hooks/                         ← post-commit, prepare-commit-msg, pre-push hooks installed
 ├── .claude/
-│   └── settings.json           # Claude Code hook config (auto-created)
-└── .gitignore
+│   └── settings.json                  ← Claude Code hook config (or equivalent for your agent)
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   │   └── bug_report.md
+│   └── pull_request_template.md
+│
+├── entire-config/
+│   ├── README.md                      ← Links to Article 44; redaction setup guide
+│   ├── settings.json.example          ← Entire settings with redaction rules
+│   └── custom-redaction.json.example  ← PP-specific redaction: env GUIDs, connection refs
+│
+├── terraform/
+│   ├── README.md                      ← Prerequisites, terraform init/plan/apply instructions
+│   ├── main.tf                        ← Root module: resource group, providers
+│   ├── variables.tf                   ← Input variables (location, prefix, env)
+│   ├── outputs.tf                     ← Output values (function app URL, storage connection)
+│   ├── terraform.tfvars.example       ← Example values; never commit real tfvars
+│   └── modules/
+│       ├── function-app/              ← Azure Function App + App Service Plan
+│       │   ├── main.tf
+│       │   ├── variables.tf
+│       │   └── outputs.tf
+│       └── managed-identity/          ← User-assigned MI + Dataverse role assignment
+│           ├── main.tf
+│           ├── variables.tf
+│           └── outputs.tf
+│
+└── src/
+    ├── webresources/
+    │   ├── README.md                  ← Links to Article 38; setup + webpack entry map
+    │   ├── package.json               ← Single build for all entities
+    │   ├── tsconfig.json
+    │   ├── webpack.config.js          ← Entry per entity; outputs dist/opportunity.js etc.
+    │   ├── shared/                    ← Utilities shared across all entities
+    │   │   └── ClientApiUtils.ts
+    │   ├── opportunity/               ← Scripts registered on Opportunity forms
+    │   │   └── FormScripts.ts             ← onSave validation handler
+    │   └── account/                   ← Scripts registered on Account forms
+    │       └── FormScripts.ts             ← onLoad handler example
+    │
+    ├── plugins/
+    │   ├── README.md                  ← Links to Article 39; registration notes
+    │   ├── Plugins.sln                ← Solution referencing Plugins.csproj
+    │   ├── Plugins.csproj             ← Single assembly; all plugin classes compiled together
+    │   ├── opportunity/               ← Namespace: MyCompany.Plugins.Opportunity
+    │   │   └── OpportunityScoringPlugin.cs
+    │   └── account/                   ← Namespace: MyCompany.Plugins.Account
+    │       └── AccountValidationPlugin.cs
+    │
+    ├── customapis/
+    │   ├── README.md                  ← Links to Article 39; registration notes
+    │   ├── CustomApis.sln             ← Solution referencing CustomApis.csproj
+    │   ├── CustomApis.csproj          ← Single assembly; all custom API handlers compiled together
+    │   └── quote/                    ← Namespace: MyCompany.CustomApis.Quote
+    │       └── CalculateQuoteTotalHandler.cs
+    │
+    ├── pcfs/
+    │   ├── README.md                  ← Links to Article 40; pac pcf push notes
+    │   └── AccountOpportunityGrid/    ← Dataset PCF control (opportunities grid)
+    │       ├── AccountOpportunityGrid/
+    │       │   ├── ControlManifest.Input.xml
+    │       │   ├── index.ts
+    │       │   └── css/
+    │       │       └── AccountOpportunityGrid.css
+    │       ├── package.json
+    │       ├── tsconfig.json
+    │       └── pcfconfig.json
+    │
+    ├── codeapps/
+    │   └── README.md                  ← Placeholder; no code app sample in this series
+    │
+    └── azurefunctions/
+        ├── README.md                  ← Links to Article 41; Managed Identity setup
+        ├── DocumentGenerationFunction/  ← HTTP-triggered, calls Dataverse Web API
+        │   ├── DocumentGenerationFunction.csproj
+        │   ├── DocumentGenerationFunction.cs
+        │   ├── host.json
+        │   └── local.settings.json.example
+        ├── ServiceBusProcessor/       ← PeekLock pattern, Power Automate integration
+        │   ├── ServiceBusProcessor.csproj
+        │   └── ServiceBusTriggeredProcessor.cs
+        └── custom-connector/
+            └── openapi-definition.yaml  ← Custom connector definition for the functions
+
+tests/
+    ├── webresources/
+    │   ├── package.json               ← Single Jest project mirroring src/webresources/
+    │   ├── tsconfig.json
+    │   ├── jest.config.js
+    │   ├── shared/
+    │   │   └── ClientApiUtils.test.ts
+    │   └── opportunity/
+    │       └── FormScripts.test.ts
+    │
+    ├── plugins/
+    │   └── Plugins.Tests/             ← Single xUnit project for all plugin classes
+    │       ├── Plugins.Tests.csproj
+    │       ├── opportunity/
+    │       │   ├── OpportunityScoringPluginTests.cs
+    │       │   └── Fakes/
+    │       │       └── FakeOrganizationService.cs  ← IOrganizationService stub
+    │       └── account/
+    │           └── AccountValidationPluginTests.cs
+    │
+    ├── customapis/
+    │   └── CustomApis.Tests/          ← Single xUnit project for all custom API handlers
+    │       ├── CustomApis.Tests.csproj
+    │       └── quote/
+    │           └── CalculateQuoteTotalHandlerTests.cs
+    │
+    ├── pcfs/
+    │   └── AccountOpportunityGrid.test/  ← Jest tests for the PCF control
+    │       ├── index.test.ts
+    │       ├── package.json
+    │       ├── tsconfig.json
+    │       └── jest.config.js
+    │
+    └── azurefunctions/
+        └── AzureFunctions.Tests/      ← xUnit tests for both Azure Functions
+            ├── AzureFunctions.Tests.csproj
+            ├── DocumentGenerationFunctionTests.cs
+            └── ServiceBusProcessorTests.cs
 ```
 
 ---
@@ -245,7 +354,43 @@ This file is gitignored automatically.
 
 ---
 
-## Step 7: Checkpoint Remote (Enterprise / Governance)
+## Step 7: Choose Where to Store Checkpoints
+
+Entire stores checkpoint data on a dedicated branch — `entire/checkpoints/v1` — and pushes it alongside your code. Before enabling the push, decide where that branch should live. There are two approaches.
+
+### Option A: Same Repository (Default)
+
+Checkpoints are pushed to the `entire/checkpoints/v1` branch of your solution repository. This is the default when `push_sessions: true` is set and no checkpoint remote is configured.
+
+**When to use this:**
+- Solo developer or small team where access control is not a concern
+- Open-source repositories where session history is itself part of the demonstration (as in the companion repo for this series)
+- Teams where everyone with code read access can also see session transcripts
+
+| | Same repo | Separate repo |
+|---|---|---|
+| Setup | Zero — works automatically | One command + a private GitHub repo |
+| Access control | Inherits repo permissions — anyone with repo access sees transcripts | Fully independent — separate team/org permissions |
+| Transcript visibility on clone | `git clone` fetches code; `entire checkpoint list` fetches the branch lazily | Never co-located with source code |
+| Compliance | Suitable where session data has the same classification as source code | Enables different retention, DLP, and audit policies per repo |
+
+No additional configuration needed for Option A — `push_sessions: true` is all that is required. Option B configuration is covered in the next step.
+
+### Option B: Separate Repository (Enterprise)
+
+Checkpoints are pushed to a second, private repository. Your solution code stays in its normal repository. The checkpoint repo can have a tighter access control list — only leads, architects, or compliance reviewers need access to it.
+
+**When to use this:**
+- Enterprise teams where session transcripts may contain prompts referencing sensitive data (customer names, environment URLs, tenant IDs) even after redaction
+- Regulated environments (FSI, healthcare, government) where AI session logs need separate retention policies
+- Inner-source or open-source repos where the code is public but session transcripts are private
+- Teams where individual developer AI sessions should be visible only to that developer and their team lead
+
+> **Recommendation for Power Platform teams:** Start with the same-repo approach during development. Move to a separate repo before onboarding a wider team or if your solution touches regulated Dataverse data (customer records, employee data, financials). The switch is a one-line config change and does not affect existing checkpoints.
+
+---
+
+## Step 8: Checkpoint Remote (Enterprise / Governance)
 
 For enterprise teams where session transcripts should be kept separate from the solution code repository — for security, governance, or access control reasons — configure a checkpoint remote:
 
@@ -272,7 +417,7 @@ This pushes the `entire/checkpoints/v1` branch to a separate private repository.
 
 ---
 
-## Step 8: GUI Git Client Configuration
+## Step 9: GUI Git Client Configuration
 
 If your team uses Tower, GitKraken, Sourcetree, or similar GUI Git clients, the Entire hooks need the full binary path because GUI clients don't source your shell profile:
 
@@ -284,7 +429,7 @@ This embeds the full path to the `entire` binary in the installed Git hooks.
 
 ---
 
-## Step 9: Your First AI-Assisted Session and Checkpoint
+## Step 10: Your First AI-Assisted Session and Checkpoint
 
 With Entire configured, start a normal agent session in your repository:
 

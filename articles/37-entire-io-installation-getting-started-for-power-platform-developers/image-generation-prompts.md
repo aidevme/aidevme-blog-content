@@ -107,7 +107,20 @@ Dark tech illustration. A glowing code-editor panel in the centre showing a JSON
 
 ---
 
-## 9. Step 7: Checkpoint Remote for Enterprise Governance
+## 9. Step 7: Choose Where to Store Checkpoints
+
+**File name:** `entire-io-checkpoint-storage-same-vs-separate-repo.png`
+
+**Alt text:** Decision diagram comparing Entire.io checkpoint storage in the same repository versus a separate private repository
+
+**Description:** Illustrates the two approaches for checkpoint storage — same repo (default, zero config) versus separate repo (enterprise, independent access control) — as a forked decision diagram. Used at the start of Step 7 before readers choose their approach and before the configuration details of Option B.
+
+**Generation prompt:**
+Dark tech illustration. A forked-path decision diagram. At the top, a single teal `entire/checkpoints/v1` branch icon flows downward into a diamond decision node. Two paths diverge from the diamond. Left path (Option A — green accent): a single repository box containing both a code-bracket icon and a small branch/checkpoint capsule icon side by side — labelled "Same repo"; a zero-step badge sits on the arrow (zero config). Right path (Option B — amber/gold accent): two separate repository boxes — the left one has a code-bracket icon (solution code), the right one has a padlock icon (session records) — connected by a forking arrow with a small shield/governance badge at the split point. The green left path has a softer, simpler glow; the amber right path has a more structured, guarded feel. Background: near-black. Color palette: teal for the shared branch, green for Option A, amber for Option B. Flat vector diagram, no readable text labels.
+
+---
+
+## 10. Step 8: Checkpoint Remote for Enterprise Governance
 
 **File name:** `entire-io-checkpoint-remote-enterprise-governance.png`
 
@@ -120,7 +133,7 @@ Dark tech illustration. Two repository boxes side by side, connected by divergin
 
 ---
 
-## 10. Step 8: GUI Git Client Configuration
+## 11. Step 9: GUI Git Client Configuration
 
 **File name:** `entire-io-gui-git-client-configuration.png`
 
@@ -133,7 +146,7 @@ Dark tech illustration. A central Git hook icon (a small script/gear symbol) sit
 
 ---
 
-## 11. Step 9: Your First AI-Assisted Session and Checkpoint
+## 12. Step 10: Your First AI-Assisted Session and Checkpoint
 
 **File name:** `entire-io-first-checkpoint-ai-session-power-platform.png`
 
@@ -146,7 +159,7 @@ Dark tech illustration. Three connected panels in a left-to-right flow. Left pan
 
 ---
 
-## 12. Verifying Your Setup
+## 13. Verifying Your Setup
 
 **File name:** `entire-io-verify-setup-checkpoint-list.png`
 
@@ -211,7 +224,159 @@ Dark tech illustration. Three environment variable rows arranged vertically, eac
 
 ---
 
-## 17. First-Day Checklist
+## 17. Step 5: Repository Structure — Animated GIF
+
+**File name:** `entire-io-power-platform-samples-folder-structure.gif`
+
+**Alt text:** Animated folder tree reveal of the entire-io-power-platform-samples repository — showing src/, tests/, terraform/, and entire-config/ progressively expanding
+
+**Description:** Animated GIF for Step 5. The full `entire-io-power-platform-samples` folder tree is printed instantly in a terminal-style window — taller than the viewport — and then the viewport automatically scrolls from top to bottom at a steady pace, letting readers read every line. Ends with a 2-second hold at the bottom, then loops back to the top.
+
+**Animation spec (for terminalizer / asciinema2gif / custom renderer):**
+
+Terminal window: 900×520 px (viewport), dark background `#0d1117`, monospace font (JetBrains Mono or Fira Code), font size 13px. The rendered tree is ~90 lines tall — approximately 2.5× the viewport height, so scrolling is necessary to see it all.
+
+Color scheme:
+- Root folder: `#00b4d8` (teal)
+- `.entire/` subtree: `#4361ee` (electric blue) — highlight as Entire-owned files
+- `.git/hooks/`: `#4361ee`
+- `.claude/`: `#4361ee`
+- `entire-config/`: `#4361ee`
+- `terraform/`: `#f77f00` (orange)
+- `src/`: `#06d6a0` (green)
+- `tests/`: `#a8dadc` (pale blue)
+- `.github/`: `#8d8d8d` (grey — secondary)
+- File names: `#e6edf3` (near-white)
+- Comments after `←`: `#6e7681` (muted grey)
+
+**Full tree content (rendered in one pass before scroll begins):**
+
+```
+entire-io-power-platform-samples/
+├── README.md                          ← Series overview, prerequisites, how to use
+├── CONTRIBUTING.md                    ← How to run samples, submit issues, style guide
+├── .gitignore
+├── .entire/
+│   ├── settings.json                  ← Entire enabled; sample redaction rules — commit this
+│   ├── settings.local.json            ← Personal overrides — gitignored automatically
+│   └── .gitignore                     ← Ensures local settings are not committed
+├── .git/
+│   └── hooks/                         ← post-commit, prepare-commit-msg, pre-push hooks installed
+├── .claude/
+│   └── settings.json                  ← Claude Code hook config (or equivalent for your agent)
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   │   └── bug_report.md
+│   └── pull_request_template.md
+├── entire-config/
+│   ├── README.md
+│   ├── settings.json.example
+│   └── custom-redaction.json.example
+├── terraform/
+│   ├── README.md
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   ├── terraform.tfvars.example
+│   └── modules/
+│       ├── function-app/
+│       │   ├── main.tf
+│       │   ├── variables.tf
+│       │   └── outputs.tf
+│       └── managed-identity/
+│           ├── main.tf
+│           ├── variables.tf
+│           └── outputs.tf
+└── src/
+    ├── webresources/
+    │   ├── package.json
+    │   ├── tsconfig.json
+    │   ├── webpack.config.js
+    │   ├── shared/
+    │   │   └── ClientApiUtils.ts
+    │   ├── opportunity/
+    │   │   └── FormScripts.ts
+    │   └── account/
+    │       └── FormScripts.ts
+    ├── plugins/
+    │   ├── Plugins.sln
+    │   ├── Plugins.csproj
+    │   ├── opportunity/
+    │   │   └── OpportunityScoringPlugin.cs
+    │   └── account/
+    │       └── AccountValidationPlugin.cs
+    ├── customapis/
+    │   ├── CustomApis.sln
+    │   ├── CustomApis.csproj
+    │   └── quote/
+    │       └── CalculateQuoteTotalHandler.cs
+    ├── pcfs/
+    │   └── AccountOpportunityGrid/
+    │       ├── ControlManifest.Input.xml
+    │       ├── index.ts
+    │       └── css/
+    │           └── AccountOpportunityGrid.css
+    ├── codeapps/
+    │   └── README.md
+    └── azurefunctions/
+        ├── DocumentGenerationFunction/
+        │   ├── DocumentGenerationFunction.csproj
+        │   ├── DocumentGenerationFunction.cs
+        │   ├── host.json
+        │   └── local.settings.json.example
+        ├── ServiceBusProcessor/
+        │   ├── ServiceBusProcessor.csproj
+        │   └── ServiceBusTriggeredProcessor.cs
+        └── custom-connector/
+            └── openapi-definition.yaml
+
+tests/
+    ├── webresources/
+    │   ├── package.json
+    │   ├── jest.config.js
+    │   ├── shared/
+    │   │   └── ClientApiUtils.test.ts
+    │   └── opportunity/
+    │       └── FormScripts.test.ts
+    ├── plugins/
+    │   └── Plugins.Tests/
+    │       ├── Plugins.Tests.csproj
+    │       ├── opportunity/
+    │       │   ├── OpportunityScoringPluginTests.cs
+    │       │   └── Fakes/
+    │       │       └── FakeOrganizationService.cs
+    │       └── account/
+    │           └── AccountValidationPluginTests.cs
+    ├── customapis/
+    │   └── CustomApis.Tests/
+    │       ├── CustomApis.Tests.csproj
+    │       └── quote/
+    │           └── CalculateQuoteTotalHandlerTests.cs
+    ├── pcfs/
+    │   └── AccountOpportunityGrid.test/
+    │       ├── index.test.ts
+    │       ├── package.json
+    │       └── jest.config.js
+    └── azurefunctions/
+        └── AzureFunctions.Tests/
+            ├── AzureFunctions.Tests.csproj
+            ├── DocumentGenerationFunctionTests.cs
+            └── ServiceBusProcessorTests.cs
+```
+
+**Scroll animation:**
+
+- Phase 1 — Render (0.0 s): Full tree is printed instantly (0 ms typing delay). Viewport shows top of tree.
+- Phase 2 — Hold at top (0.5 s): Static, 500 ms.
+- Phase 3 — Scroll down (1.0 s → 14.0 s): Smooth continuous scroll at ~55 px/s. Duration ~13 s to travel from top to bottom of the full tree. No pauses mid-scroll.
+- Phase 4 — Hold at bottom (14.0 s): Static for 2 seconds showing the last lines of `tests/azurefunctions/`.
+- Phase 5 — Loop: Jump-cut back to top (frame 1), repeat.
+
+Total loop duration: ~16.5 seconds.
+
+---
+
+## 18. First-Day Checklist
 
 **File name:** `entire-io-first-day-checklist-power-platform-team.png`
 
