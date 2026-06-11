@@ -1,14 +1,15 @@
-# Claude Fable 5 in GitHub Copilot: A Power Platform Architect's Technical Breakdown
+# Claude Fable 5 in GitHub Copilot — Technical Breakdown for Power Platform and Enterprise Teams
 
-**Meta description:** Claude Fable 5 — Anthropic's first Mythos-class model — is now GA in GitHub Copilot. Technical specs, the Opus 4.8 fallback mechanism, 30-day retention, and what enterprise Power Platform teams need before enabling it.
-
-**Suggested slug:** `claude-fable-5-github-copilot-technical-breakdown`
-
-**Category:** AI Coding Agents · **Tags:** GitHub Copilot, Claude, AI Governance, Azure DevOps, Enterprise Architecture
+**WordPress SEO**
+- **Focus keyphrase:** Claude Fable 5 GitHub Copilot
+- **SEO title:** Claude Fable 5 in GitHub Copilot — Technical Breakdown for Power Platform and Enterprise Teams
+- **Meta description:** Claude Fable 5 — Anthropic's first Mythos-class model — is now GA in GitHub Copilot. Technical specs, the Opus 4.8 fallback mechanism, 30-day retention, and what enterprise Power Platform teams need before enabling it.
+- **Slug:** claude-fable-5-github-copilot-technical-breakdown
+- **Excerpt:** Claude Fable 5 is Anthropic's first Mythos-class model and it's now generally available in GitHub Copilot. This breakdown covers the technical specs, the built-in Opus 4.8 fallback mechanism, the 30-day data retention requirement that breaks standard ZDR assumptions, and a practical enablement framework for Power Platform and enterprise teams operating under data governance constraints.
 
 ---
 
-On June 9, GitHub announced that **Claude Fable 5** is generally available in GitHub Copilot. This isn't just another entry in the model picker. Fable 5 is the first model in Anthropic's new **Mythos class** — a capability tier that sits *above* Opus — and it arrives with a set of behaviors that change how you should think about model selection in an enterprise context.
+On June 9, GitHub announced that **Claude Fable 5** is generally available in GitHub Copilot. This isn't just another entry in the model picker. Fable 5 is the first model in Anthropic's new **Mythos class** — a capability tier that sits *above* Opus. It arrives with behaviors that change how you think about model selection in an enterprise context.
 
 There are three things that make this release different from the usual "new model dropped" cycle:
 
@@ -16,17 +17,40 @@ There are three things that make this release different from the usual "new mode
 2. **It ships with a built-in safeguard layer** that silently falls back to Claude Opus 4.8 on certain request types — behavior you've never had to reason about before.
 3. **It's off by default in Copilot and requires 30-day data retention**, breaking the Zero Data Retention assumption most enterprise Copilot rollouts were approved under.
 
-For those of us building Power Platform and Dataverse solutions for enterprise clients across DACH and Benelux — where data residency and retention questions surface in *every* architecture review — that combination makes Fable 5 the first Copilot model where selection is a governance decision, not just a capability one.
+Data residency and retention questions surface in *every* architecture review for DACH and Benelux enterprise teams. That combination makes Fable 5 the first Copilot model where selection is a governance decision, not just a capability one.
 
 Let's go through the technical detail, then the enablement framework.
 
+---
+
+## Table of Contents
+
+- [What Claude Fable 5 Actually Is](#what-claude-fable-5-actually-is)
+  - [Performance benchmarks at launch](#performance-benchmarks-at-launch)
+- [The Technical Specs That Matter for Builders](#the-technical-specs-that-matter-for-builders)
+- [The Fallback Mechanism — The Part That's Genuinely New](#the-fallback-mechanism--the-part-thats-genuinely-new)
+  - [What this means for Power Platform teams](#what-this-means-for-power-platform-teams)
+- [Where You'll Find It in Copilot](#where-youll-find-it-in-copilot)
+- [The Data Retention Requirement — Read This Before Enabling](#the-data-retention-requirement--read-this-before-enabling)
+  - [What the retention window actually means](#what-the-retention-window-actually-means)
+- [My Take: How to Handle the Enablement Decision](#my-take-how-to-handle-the-enablement-decision)
+  - [Treat It as a Scoped Rollout, Not a Tenant-Wide Switch](#treat-it-as-a-scoped-rollout-not-a-tenant-wide-switch)
+  - [Put Model-Level Data Handling in Your AI Usage Register](#put-model-level-data-handling-in-your-ai-usage-register)
+  - [Don't Let the Retention Discussion Bury the Capability Discussion](#dont-let-the-retention-discussion-bury-the-capability-discussion)
+  - [Pilot with a Measurable Workload](#pilot-with-a-measurable-workload)
+- [Key Takeaways](#key-takeaways)
+
+---
+
 ## What Claude Fable 5 actually is
 
-Anthropic launched Fable 5 on June 9, 2026, describing it as a Mythos-class model made safe for general use. The backstory matters for understanding the safeguards. Anthropic previewed **Claude Mythos** in April to a limited set of partners through Project Glasswing, because the model's cybersecurity capabilities were considered too dangerous for open release — it proved unusually good at finding and exploiting vulnerabilities across major operating systems and browsers.
+Anthropic launched Fable 5 on June 9, 2026, describing it as a Mythos-class model made safe for general use. The backstory matters for understanding the safeguards. Anthropic previewed **Claude Mythos** in April to a limited set of partners through Project Glasswing. Anthropic considered it too dangerous for open release. The model proved unusually good at finding and exploiting vulnerabilities across major operating systems and browsers.
 
 Fable 5 is the *same underlying model* as the now-upgraded Claude Mythos 5, wrapped in a classifier layer. The two names exist purely to distinguish the safeguarded public model (Fable) from the unrestricted partner model (Mythos). Mythos 5 stays limited to vetted cyberdefense and biology partners; Fable 5 is what you and I get.
 
-The headline characteristic of the Mythos class is **long-horizon, autonomous execution**. This is a model designed to run in an agent harness for extended periods — planning across stages, delegating to sub-agents, writing its own tests to verify work, and self-correcting through verification loops. Anthropic frames it as built for work that would otherwise take a person hours, days, or weeks, and explicitly describes it working "for days at a time." It also uses **vision to check its own coding output** against the original design or goal — relevant if you're having an agent implement a UI from a mockup. The longer and more complex the task, the larger Fable 5's lead over previous models.
+The headline characteristic of the Mythos class is **long-horizon, autonomous execution**. Fable 5 runs in an agent harness for extended periods. It plans across stages, delegates to sub-agents, writes its own tests, and self-corrects through verification loops. Anthropic frames it as built for work that would otherwise take a person hours, days, or weeks. The documentation explicitly describes it as capable of working "for days at a time." It also uses **vision to check its own coding output** against the original design or goal — relevant if you're having an agent implement a UI from a mockup. The longer and more complex the task, the larger Fable 5's lead over previous models.
+
+### Performance benchmarks at launch
 
 A few concrete data points from the launch that illustrate the capability jump:
 
@@ -53,29 +77,31 @@ Here are the hard numbers, pulled from Anthropic's API documentation rather than
 
 A few of these have practical consequences worth calling out.
 
-**The 1M-token context window is at standard pricing.** A 900k-token request is billed at the same per-token rate as a 9k-token request — no long-context premium. For a Power Platform monorepo with solution metadata, multiple Code Apps, and pipeline definitions, that means you can put real architectural context in front of the model without a pricing cliff. And prompt caching carries a 90% discount on cached input tokens, so a stable context block (your solution structure, coding standards, schema) reused across an agent session gets cheap fast after the first call.
+**The 1M-token context window is at standard pricing.** GitHub bills a 900k-token request at the same per-token rate as a 9k-token request — no long-context premium. For a Power Platform monorepo with solution metadata, multiple Code Apps, and pipeline definitions, that means you can put real architectural context in front of the model without a pricing cliff. And prompt caching carries a 90% discount on cached input tokens, so a stable context block (your solution structure, coding standards, schema) reused across an agent session gets cheap fast after the first call.
 
 **US-only inference is available at 1.1x pricing** for input and output, for workloads that must run in the US. Note the direction here: this is US data residency, not EU. For DACH/Benelux clients with EU-residency requirements, US-only inference is the wrong lever — you'd be pinning data to the US, not Europe. Treat the residency story as unresolved for EU-regulated engagements until your platform (Copilot, Bedrock, Vertex, or Foundry) documents an EU option for this model.
 
 **New tokenizer — budget for ~30% more tokens.** Fable 5 uses the tokenizer introduced with Opus 4.7. The same text produces roughly 30% more tokens than pre-4.7 models. If you're estimating cost by porting old token counts, you'll under-budget. Use the token counting API with `model: "claude-fable-5"` to measure accurately.
 
-**Adaptive thinking is always on, and the raw chain of thought is never returned.** You can't disable thinking; you steer depth through the `effort` parameter instead. The `thinking.display` field defaults to `"omitted"` — set it to `"summarized"` if you want readable reasoning summaries. If you've built tooling that parses raw reasoning tokens, that integration needs revisiting.
+**Adaptive thinking is always on, and the API never returns the raw chain of thought.** You can't disable thinking; you steer depth through the `effort` parameter instead. The `thinking.display` field defaults to `"omitted"` — set it to `"summarized"` if you want readable reasoning summaries. If you've built tooling that parses raw reasoning tokens, that integration needs revisiting.
 
 ## The fallback mechanism — the part that's genuinely new
 
 This is the behavior you've never had to design around before, and it deserves its own section.
 
-Fable 5 ships with **safety classifiers** — separate AI systems that inspect requests and, when they detect certain categories, prevent Fable from responding. Instead of a flat refusal, the request **falls back to Claude Opus 4.8**, and the user is told this happened. The covered categories are cybersecurity (exploitation and offensive tasks), biology and chemistry, and model distillation attempts.
+Fable 5 ships with **safety classifiers** — separate AI systems that inspect requests and, when they detect certain categories, prevent Fable from responding. Instead of a flat refusal, the request **falls back to Claude Opus 4.8**, and Copilot notifies the user. The covered categories are cybersecurity (exploitation and offensive tasks), biology and chemistry, and model distillation attempts.
 
 Anthropic's early data shows fallback triggers in **less than 5% of sessions** — for the other 95%+, you're getting full Fable 5 performance, effectively identical to Mythos 5. But "less than 5%" is an average, and the classifiers are deliberately tuned conservatively, so benign requests will sometimes be caught.
 
+### What this means for Power Platform teams
+
 Why does this matter for Power Platform work specifically? Most of what we do is nowhere near these categories. But consider the edge cases: a developer asking the agent to harden a Power Pages site against injection, to review authentication flows in a custom connector, or to analyze a security finding from a code scan. Those touch "cybersecurity" closely enough that a conservative classifier might route them to Opus 4.8 mid-session. The result won't be wrong — Opus 4.8 is highly capable — but it will be *different* from what the rest of your session produced, and the model behind your output changed without you choosing it.
 
-On the API, this surfaces cleanly: a refused request returns `stop_reason: "refusal"` as a successful HTTP 200 (not an error), and reports which classifier declined it. You're **not billed at Fable prices** for a request refused before any output is generated. One nuance if you build directly on the Claude API rather than through Copilot: the reroute to Opus 4.8 isn't automatic — API customers configure it through the new Fallback API (the `fallbacks` parameter) or SDK middleware. In GitHub Copilot the mechanics are abstracted away and the routing just happens, but the underlying behavior is the same — worth knowing when you're debugging why a particular agent run "felt like a different model."
+On the API, this surfaces cleanly: a refused request returns `stop_reason: "refusal"` as a successful HTTP 200 (not an error), and reports which classifier declined it. You're **not billed at Fable prices** for a request refused before any output is generated. One nuance for those building directly on the Claude API: the reroute to Opus 4.8 isn't automatic. API customers configure it through the new Fallback API (the `fallbacks` parameter) or SDK middleware. In GitHub Copilot, the mechanics are abstracted and the routing just happens. The underlying behavior is the same — worth knowing when you're debugging why a particular run "felt like a different model."
 
 ## Where you'll find it in Copilot
 
-Fable 5 is rolling out gradually to **Copilot Pro+, Max, Business, and Enterprise** plans. Once it reaches your tenant, it appears in the model picker across essentially the full surface area: Visual Studio Code (chat, ask, edit, and agent modes), Visual Studio, Copilot CLI, the GitHub Copilot cloud agent and app, github.com, GitHub Mobile, JetBrains, Xcode, and Eclipse.
+Fable 5 is rolling out gradually to **Copilot Pro+, Max, Business, and Enterprise** plans. Once it reaches your tenant, the model picker shows Fable 5 across essentially the full surface area. In VS Code, that means chat, ask, edit, and agent modes. It also covers Visual Studio, Copilot CLI, the GitHub Copilot cloud agent and app, github.com, GitHub Mobile, JetBrains, Xcode, and Eclipse.
 
 Two practical notes.
 
@@ -87,9 +113,9 @@ Second, **agent mode is where this model earns its price**. Using a Mythos-class
 
 Here's the section to forward to your IT department.
 
-Every other Claude model in GitHub Copilot — Opus 4.8, Sonnet 4.5, Haiku 4.5 — operates under **Zero Data Retention (ZDR)**. Prompts and outputs aren't stored by Anthropic. This is the assumption most enterprise Copilot rollouts were approved under.
+Every other Claude model in GitHub Copilot — Opus 4.8, Sonnet 4.5, Haiku 4.5 — operates under **Zero Data Retention (ZDR)**. Anthropic doesn't store prompts or outputs. This is the assumption that underpinned most enterprise Copilot rollouts.
 
-Claude Fable 5 breaks that assumption deliberately. As a designated **Covered Model**, Fable 5 carries **30-day data retention** on both first- and third-party surfaces (including Copilot). Anthropic retains prompts and outputs to run the safety classifiers that detect misuse and reduce false positives. After 30 days the data is deleted, and Anthropic states it is **not used to train models** or for any non-safety purpose. They've also added privacy controls: logging all human access to the data and ensuring deletion in almost all cases.
+Claude Fable 5 breaks that assumption deliberately. As a designated **Covered Model**, Fable 5 carries **30-day data retention** on both first- and third-party surfaces (including Copilot). Anthropic retains prompts and outputs to run the safety classifiers that detect misuse and reduce false positives. Anthropic deletes the data after 30 days, and states it **does not use retained data to train models** or for any non-safety purpose. They've also added privacy controls: logging all human access to the data and ensuring deletion in almost all cases.
 
 The mechanics on the GitHub side:
 
@@ -97,9 +123,11 @@ The mechanics on the GitHub side:
 - Enabling the policy **constitutes acknowledgement** of the retention requirement.
 - Leaving it off keeps the model unavailable to your organization — everything else continues exactly as before.
 
-I want to be precise about what this is and isn't. This is not training-data collection. It's a bounded, 30-day retention window that exists *because* the model is more capable — the classifiers watching for misuse are the mechanism that made a Mythos-class model releasable to the public at all.
+### What the retention window actually means
 
-But "not training data" doesn't make it a non-event for compliance. If your organization's Copilot approval, your client contracts, or your DPA reviews were predicated on ZDR for AI coding assistants, **enabling Fable 5 is a material change** that needs to go back through review. For regulated clients in our market — banking, insurance, public sector — assume this is a conversation, not a checkbox.
+I want to be precise about what this is and isn't. This is not training-data collection. It's a bounded, 30-day retention window that exists *because* the model is more capable. The classifiers watching for misuse are what made a Mythos-class model safe to release publicly.
+
+But "not training data" doesn't make it a non-event for compliance. **Enabling Fable 5 is a material change** if your Copilot approval, client contracts, or DPA reviews assumed ZDR. Send it back through review. For regulated clients in our market — banking, insurance, public sector — assume this is a conversation, not a checkbox.
 
 ## My take: how to handle the enablement decision
 
@@ -107,11 +135,11 @@ Having sat on both sides of these reviews, here's the framework I'd use.
 
 ### Treat it as a scoped rollout, not a tenant-wide switch
 
-The policy is org-level, but your *usage guidance* doesn't have to be uniform. Enable Fable 5 for repositories containing your own IP — internal tooling, accelerators, community samples — while keeping client-engagement repositories on the ZDR models until the client's DPA explicitly covers the retention window. Agent-mode prompts routinely include source code, configuration, and architectural context. Whose code that is matters.
+The policy is org-level, but your *usage guidance* doesn't have to be uniform. Enable Fable 5 for repositories containing your own IP — internal tooling, accelerators, community samples. Keep client-engagement repositories on the ZDR models until the client's DPA explicitly covers the retention window. Agent-mode prompts routinely include source code, configuration, and architectural context. Whose code that is matters.
 
 ### Put model-level data handling in your AI usage register
 
-If you operate under the EU AI Act's transparency expectations or an internal AI governance framework — most DACH enterprises now have one — the retention *and* residency characteristics of each model in your toolchain belong in your documentation. "GitHub Copilot" is no longer a single line item; model selection now carries distinct data-handling properties, and as noted above, Fable's US-only inference option doesn't solve EU residency.
+Most DACH enterprises now operate under the EU AI Act or an internal AI governance framework. For those teams, the retention *and* residency characteristics of each model in your toolchain belong in your documentation. "GitHub Copilot" is no longer a single line item. Model selection now carries distinct data-handling properties, and Fable's US-only inference option doesn't solve EU residency.
 
 ### Don't let the retention discussion bury the capability discussion
 
