@@ -350,6 +350,7 @@ Several things in Scout's architecture are directly relevant to Power Platform w
 - [Responsible AI overview for Microsoft Scout](https://learn.microsoft.com/en-us/microsoft-scout/microsoft-scout-responsible-ai-overview) — Microsoft Learn
 - [Responsible AI FAQ for Microsoft Scout](https://learn.microsoft.com/en-us/microsoft-scout/microsoft-scout-responsible-ai-faq) — Microsoft Learn
 - [Announcing the new Work IQ APIs](https://www.microsoft.com/en-us/microsoft-365/blog/2026/06/02/announcing-the-new-work-iq-apis/) — Microsoft 365 Blog (June 2, 2026)
+- [Work IQ APIs: The Future of Business Context](https://aidevme.com/work-iq-apis-microsoft-365-intelligence-layer-enterprise-agents/) — aidevme.com
 - [Scout, Claw, Cowork, Tasks, Opal, Agent 365...](https://www.perspectives.plus/p/scout-claw-cowork-tasks-opal-agent-365) — Jukka Niiranen, Perspectives on Power Platform (June 12, 2026) *(paywalled after intro)*
 - [Microsoft wants to make people "addicted" to Scout](https://www.404media.co/microsoft-wants-to-make-people-addicted-to-scout-its-new-ai-assistant-internal-documents-reveal/) — 404 Media
 

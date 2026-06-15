@@ -233,6 +233,7 @@ The Workspaces domain deserves a separate call-out. Long-running enterprise agen
 
 ## References
 
+- [Work IQ APIs: The Future of Business Context](https://aidevme.com/work-iq-apis-microsoft-365-intelligence-layer-enterprise-agents/) — aidevme.com
 - [Announcing the new Work IQ APIs](https://www.microsoft.com/en-us/microsoft-365/blog/2026/06/02/announcing-the-new-work-iq-apis/) — Charles Lamanna, Microsoft 365 Blog (June 2, 2026)
 - [microsoft/work-iq — MCP Server and CLI for accessing Work IQ](https://github.com/microsoft/work-iq) — GitHub
 - [Work IQ pricing](https://aka.ms/WorkIQ/licensing) — Microsoft
