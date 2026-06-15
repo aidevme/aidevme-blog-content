@@ -1,0 +1,14 @@
+[    1757ms] [ERROR] Permissions policy violation: picture-in-picture is not allowed in this document. @ https://www.youtube.com/s/player/445213fb/player_embed_es6.vflset/en_US/base.js:4794
+[    1803ms] [ERROR] Permissions policy violation: picture-in-picture is not allowed in this document. @ https://www.youtube.com/s/player/445213fb/player_embed_es6.vflset/en_US/base.js:4057
+[    1886ms] [ERROR] Permissions policy violation: picture-in-picture is not allowed in this document. @ https://www.youtube.com/s/player/445213fb/player_embed_es6.vflset/en_US/base.js:4794
+[    1921ms] [ERROR] Permissions policy violation: picture-in-picture is not allowed in this document. @ https://www.youtube.com/s/player/445213fb/player_embed_es6.vflset/en_US/base.js:4057
+[    3243ms] [INFO] Images loaded lazily and replaced with placeholders. Load events are deferred. See https://go.microsoft.com/fwlink/?linkid=2048113 @ https://www.perspectives.plus/p/scout-claw-cowork-tasks-opal-agent-365:0
+[    3316ms] [LOG] %c EvalError
+    at pW (https://client.px-cloud.net/PXeBumDLwe/main.min.js:2:62921)
+    at rY (https://client.px-cloud.net/PXeBumDLwe/main.min.js:2:71554)
+    at LA (https://client.px-cloud.net/PXeBumDLwe/main.min.js:2:228441)
+    at Ly (https://client.px-cloud.net/PXeBumDLwe/main.min.js:2:228059)
+    at https://client.px-cloud.net/PXeBumDLwe/main.min.js:2:229792
+    at https://client.px-cloud.net/PXeBumDLwe/main.min.js:2:229798
+    at https://client.px-cloud.net/PXeBumDLwe/main.min.js:2:230263 @ https://client.px-cloud.net/PXeBumDLwe/main.min.js:1
+[    4153ms] [LOG] Birdie disabled: Origin not allowed @ https://www.perspectives.plus/assets/sentryAdvisory-BcvF8RYp.js:2

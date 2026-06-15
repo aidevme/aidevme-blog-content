@@ -1,7 +1,8 @@
 # Microsoft's AI Found 16 Windows CVEs — Including 4 Critical RCEs. Here's How the Agentic Pipeline Actually Works
 
 **WordPress SEO**
-- **Focus keyphrase:** Microsoft MDASH agentic security system Power Platform
+- **URL:** https://aidevme.com/microsofts-ai-found-16-windows-cves-including-4-critical-rces-heres-how-the-agentic-pipeline-actually-works/
+- **Focus keyphrase:** MDASH agentic security pipeline
 - **SEO title:** Microsoft's AI Found 16 Windows CVEs — What Power Platform Solution Architects Need to Know
 - **Meta description:** Microsoft's MDASH agentic scanning harness found 16 CVEs in Windows networking — 4 Critical RCEs on the infrastructure your Power Platform solutions run on. Here's what the pipeline does and what it means for your architecture reviews and client conversations.
 - **Slug:** microsoft-mdash-agentic-security-system-power-platform-solution-architects
@@ -20,6 +21,8 @@ That's the context that makes Microsoft's May 12 announcement worth your time. N
 - The architectural principles behind how MDASH was built map directly to problems you solve in Dataverse and Power Platform design
 
 Microsoft's new agentic scanning harness — codename **MDASH** (Microsoft Security multi-model agentic scanning harness) — found those 16 vulnerabilities in a single scan cycle and shipped them all to the same Patch Tuesday. That's not a research demo. That's an AI system closing the full loop: find, verify, patch, ship.
+
+### Three Architectural Takeaways
 
 Three things stand out from an architecture and governance perspective:
 
@@ -163,7 +166,9 @@ Two UDP packets. No race. No special timing. Deterministic.
 
 The root cause is a shallow copy problem. When IKEEXT reinjects a reassembled IKEv2 fragment through its receive pipeline, it copies the packet's receive context with a flat `memcpy`. That copies the struct bytes but not the heap allocations the struct points to. One of those allocations is the attacker-supplied security-realm identifier. After the copy, both the queued context and the live Main Mode SA hold the same pointer — and both think they own it. On teardown, both free it. Double-free of a fixed-size heap chunk. IKEEXT runs as LocalSystem inside `svchost.exe`. That's pre-auth RCE into one of the highest-privilege contexts on the machine.
 
-**Why did single-model systems miss it?** The bug spans **six source files**: the bad `memcpy` in `ike_A.c`, the alias origin in `ike_B.c`, the wrong free in `ike_C.c`, the right pattern *and* the second free in `ike_D.c`, the remote population in `ike_E.c`, and the UAF read site in `ike_F.c`. No single-file analysis connects all of that. The strongest evidence that the bug is real is the correct version of the same pattern immediately after the `memcpy` in `ike_D.c` — but you only see that by comparing across files. MDASH's specialised auditor agents are built to surface exactly that kind of cross-file pattern comparison, and the debate stage forces each finding to hold up under scrutiny before it moves forward.
+#### Why Single-Model Systems Missed It
+
+The bug spans **six source files**: the bad `memcpy` in `ike_A.c`, the alias origin in `ike_B.c`, the wrong free in `ike_C.c`, the right pattern *and* the second free in `ike_D.c`, the remote population in `ike_E.c`, and the UAF read site in `ike_F.c`. No single-file analysis connects all of that. The strongest evidence that the bug is real is the correct version of the same pattern immediately after the `memcpy` in `ike_D.c` — but you only see that by comparing across files. MDASH's specialised auditor agents are built to surface exactly that kind of cross-file pattern comparison, and the debate stage forces each finding to hold up under scrutiny before it moves forward.
 
 ---
 
@@ -207,15 +212,15 @@ AI vulnerability discovery has crossed from "interesting research project" into 
 
 Here's what I think the MDASH architecture teaches us, regardless of whether you're ever going to use MDASH specifically:
 
-**The model isn't the product. The pipeline is.**
+### The Model Isn't the Product. The Pipeline Is.
 
 The bugs MDASH found — the tcpip.sys race, the six-file ikeext.dll alias chain — are invisible to a model handed a single function. They become visible when you have a system that can sequence cross-file comparison, multi-step reachability analysis, debate between agents, and end-to-end proof construction. If you've been evaluating AI security tools based on "which model does it use," you've been asking the wrong question.
 
-**Validation is where most of the work actually lives.**
+### Validation Is Where Most of the Work Actually Lives
 
 A tool that flags candidate bugs without proving them just creates a triage backlog. The reason the Patch Tuesday cohort exists is that MDASH didn't stop at flagging. It debated, deduped, and proved. Validation isn't a checkbox at the end of the pipeline. It's its own sub-system, and it's where most of the day-to-day engineering effort goes.
 
-**Model-agnostic architecture is a competitive advantage, not just good engineering hygiene.**
+### Model-Agnostic Architecture Is a Competitive Advantage
 
 The model market is going to keep moving. Any security tool whose core value is locked to a specific model is a tool that needs to be rebuilt every six months. MDASH's architecture carries investment forward — scan plugins, scope configurations, proving agents — across model generations. That's what durable value looks like.
 
