@@ -1,5 +1,7 @@
 # Storybook MCP Server: The Complete Developer Guide to AI-Assisted UI Component Development
 
+**Article URL:** [Storybook MCP Server: Enhancing Component Documentation - Practical AI, Copilot & Modern Development Insights](https://aidevme.com/storybook-mcp-server-the-complete-developer-guide-to-ai-assisted-ui-component-development/)
+
 **WordPress SEO**
 - **Focus keyphrase:** Storybook MCP Server
 - **SEO title:** Storybook MCP Server: Complete Guide to AI-Assisted UI Development

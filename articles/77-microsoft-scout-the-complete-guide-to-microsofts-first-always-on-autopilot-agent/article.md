@@ -6,6 +6,9 @@
 - **Meta description:** Microsoft Scout is Microsoft's first Autopilot agent — a desktop AI app for Windows and macOS that acts on your files, shell, browser, and Microsoft 365 data autonomously. Here's everything you need to know.
 - **Slug:** microsoft-scout-autopilot-agent-complete-guide
 - **Excerpt:** Microsoft Scout is Microsoft's first Autopilot agent, announced at Build 2026. It's a desktop AI application for Windows and macOS that acts on your files, shell, browser, and Microsoft 365 data — with its own Entra identity, heartbeat background mode, automations, and sub-agent delegation. This guide covers everything: what it is, what it can do, how access works, enterprise governance, and what it means for Power Platform and enterprise developers.
+- **Categories:** AI & Copilot, Power Platform
+- **Tags:** Microsoft Scout, Autopilot Agent, AI Agents, Agentic AI, GitHub Copilot, Microsoft 365, Power Platform AI, Enterprise AI, Enterprise Architecture, OpenClaw, Entra Identity, Microsoft Build 2026, Playwright, Work IQ, Microsoft Purview
+- **URL:** [Microsoft Scout Autopilot Agent: What to Know - Practical AI, Copilot & Modern Development Insights](https://aidevme.com/microsoft-scout-autopilot-agent-complete-guide/)
 
 ---
 
@@ -275,8 +278,7 @@ At Build 2026, Microsoft announced [new Work IQ APIs](https://www.microsoft.com/
 
 ## OpenClaw: The Open-Source Foundation
 
-Scout is built on **OpenClaw**, Microsoft's open-source Autopilot technology. Microsoft is contributing policy conformance directly upstream to OpenClaw, meaning organisations running OpenClaw will be able to validate whether their environment is configured within their security and compliance requirements and get a verifiable, audit-ready answer.
-
+Scout is built on OpenClaw, an open-source agentic framework that Microsoft adopted as the foundation for its Autopilot agent category. Microsoft is contributing policy conformance directly upstream to OpenClaw, meaning organisations running OpenClaw will be able to validate whether their environment is configured within their security and compliance requirements and get a verifiable, audit-ready answer.
 This is the same open-source playbook Microsoft ran with VS Code and the editor ecosystem. Building on an open foundation means the enterprise governance tooling around Autopilot agents has a chance to become an ecosystem standard, not a Microsoft proprietary lock-in.
 
 ---

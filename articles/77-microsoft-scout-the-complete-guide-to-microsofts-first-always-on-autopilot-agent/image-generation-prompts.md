@@ -133,7 +133,33 @@ Dark tech illustration. A two-tier stack diagram. Top tier (coral-orange, rounde
 
 ---
 
-## 11. What This Means for Power Platform and Enterprise Developers
+## 11. The "Addiction" Controversy and Marketing vs. Reality
+
+**File name:** `microsoft-scout-addiction-controversy-marketing-vs-reality.png`
+
+**Alt text:** Microsoft Scout addiction controversy — internal strategy document leaked, Satya Nadella's response, and the gap between promotional video and actual Frontier preview
+
+**Description:** Illustrates the tension between Microsoft's marketing ambitions for Scout and the reality of the early Frontier preview — the leaked "addiction" strategy document, Nadella's public reaction, and the mock UI in the announcement video. Used at the start of the "Addiction Controversy" section.
+
+**Generation prompt:**
+Dark tech illustration. A split-panel "marketing vs. reality" contrast layout. Left panel (labelled "The Announcement" in electric blue): a polished mock UI frame with a glowing Scout interface, a play button overlay suggesting a promotional video, and a subtle browser URL bar showing the consumer Copilot URL — not the M365 work version. Right panel (labelled "The Preview" in amber): a stripped-down, experimental-badge UI frame with a "Frontier — Experimental" warning ribbon in amber, a small asterisk annotation pointing to licence requirements that "appeared, disappeared, and reappeared." Between the two panels, a vertical dividing line. Below the dividing line, a horizontally centred document icon with a red "LEAKED" stamp overlay, labeled "Internal doc: make people addicted." Below that, a speech bubble in soft grey attributed to a silhouette figure, containing the quote: "Not sure what this document is… They may want to go work elsewhere." Background: near-black. Color palette: electric blue for marketing/announcement side, amber for reality/preview side, red accent for leaked document. Flat vector split-panel layout. No real product screenshots.
+
+---
+
+## 12. Known Limitations
+
+**File name:** `microsoft-scout-known-limitations-desktop-only-workspace-boundary.png`
+
+**Alt text:** Microsoft Scout known limitations — desktop only, workspace boundary, shell permission tiers, background mode restrictions, and multi-step task reliability caveats
+
+**Description:** Illustrates the key boundaries and constraints of Scout in its current Frontier preview — what it can't do, what's blocked by default, and what requires caution before production use. Used at the start of the "Known Limitations" section.
+
+**Generation prompt:**
+Dark tech illustration. A structured warning-card grid layout. Eight rounded cards arranged in two rows of four, each card containing a small icon, a short label, and a red or amber warning indicator. Card 1 (amber, mobile/phone with X): "Desktop only — Windows 11 / macOS 12+, no mobile." Card 2 (amber, folder with boundary line): "Workspace boundary — no access outside configured directory." Card 3 (amber, terminal with lock): "Shell permissions enforced — dangerous commands blocked by default." Card 4 (amber, M365 badge with key): "M365 boundary — only data your account is authorised to access." Card 5 (red, skill file with question mark): "Custom skills unvalidated — review outputs carefully." Card 6 (amber, clock/heartbeat icon with restricted badge): "Background modes more restricted than interactive sessions." Card 7 (amber, branching task graph with warning triangle): "Multi-step reliability — complex tasks may not always complete." Card 8 (red, gavel/scale icon with X): "Not for high-stakes decisions — legal, medical, financial." Each card has a thin amber or red border. Background: near-black. Color palette: amber for capability constraints, red for hard restrictions. Below the grid, a single-line caption in soft white: "Always review AI-generated content before sending, sharing, or deploying." Flat vector warning-card grid.
+
+---
+
+## 13. What This Means for Power Platform and Enterprise Developers
 
 **File name:** `microsoft-scout-power-platform-developer-implications.png`
 
@@ -146,7 +172,7 @@ Dark tech illustration. A four-quadrant card layout, each quadrant a distinct im
 
 ---
 
-## 12. Key Takeaways
+## 14. Key Takeaways
 
 **File name:** `microsoft-scout-key-takeaways-power-platform-enterprise.png`
 
